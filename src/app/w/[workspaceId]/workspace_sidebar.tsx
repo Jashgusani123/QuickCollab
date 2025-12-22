@@ -16,6 +16,7 @@ import { useGetAllMembers } from "@/features/member/hooks/use_get_members";
 import { UserItem } from "./user_item";
 import { useCreateChannelModel } from "@/features/channel/store/use_create_channel_model";
 import { useChannelId } from "@/hooks/use_channel_id";
+import QuickCollabTypingLoader from "@/components/quick_collab_typing_loader";
 
 export const WorkspaceSidebar = () => {
   const workspaceId = useWorkspaceId();
@@ -33,23 +34,24 @@ export const WorkspaceSidebar = () => {
 
   if (workspaceLoading || memberLoading || channelLoading || membersLoading) {
     return (
-      <div className="flex flex-col  h-full  items-center justify-center">
-        <Loader2 className="size-5 animate-spin text-white " />
+      <div className="flex flex-col h-full items-center justify-center bg_light">
+        {/* <Loader2 className="size-5 animate-spin text-content-text" /> */}
+        <QuickCollabTypingLoader />
       </div>
     );
   }
 
   if (!member || !workspace) {
     return (
-      <div className="flex flex-col  h-full  items-center justify-center">
-        <AlertTriangle className="size-5 text-white" />
-        <p className="text-white text-sm ">Workspace not found</p>
+      <div className="flex flex-col h-full items-center justify-center bg_light">
+        <AlertTriangle className="size-5 text-content-text" />
+        <p className="text-content-text text-sm">Workspace not found</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col bg_light  h-full ">
+    <div className="flex flex-col h-full bg-(--sidebar-surface-3)/20">
       <WorkspaceHeader
         workspace={workspace}
         isAdmin={member.role === "admin"}
@@ -88,9 +90,9 @@ export const WorkspaceSidebar = () => {
           <UserItem
             key={item._id}
             id={item._id}
+            itsYou={item._id === member._id}
             label={item.user.name}
             image={item.user.image}
-            variant={"rightMargin"}
           />
         ))}
       </WorkspaceSection>

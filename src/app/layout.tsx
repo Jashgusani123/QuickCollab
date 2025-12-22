@@ -6,6 +6,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryProvider } from "@/providers/query.provider";
+import { NuqsProvider } from "@/providers/nuqs.provider";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -29,16 +30,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider>
-          <AuthProvider >
+          <AuthProvider>
             <QueryProvider>
-              <Toaster position="bottom-left" />
-              <Model />
-              {children}
-              <ReactQueryDevtools initialIsOpen={false} />
+              <NuqsProvider>
+                <Toaster position="bottom-left" />
+                <Model />
+                {children}
+                <ReactQueryDevtools initialIsOpen={false} />
+              </NuqsProvider>
             </QueryProvider>
           </AuthProvider>
         </ThemeProvider>

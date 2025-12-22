@@ -1,6 +1,7 @@
 import { useCreateMessage } from "@/features/messages/hook/use_create_message";
 import { useChannelId } from "@/hooks/use_channel_id";
 import { useWorkspaceId } from "@/hooks/use_workspace_id";
+import { Loader } from "lucide-react";
 import dynamic from "next/dynamic";
 import Quill from "quill";
 import { useRef, useState } from "react";

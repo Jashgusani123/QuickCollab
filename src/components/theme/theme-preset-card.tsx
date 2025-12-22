@@ -16,18 +16,21 @@ export function ThemePresetCard({ theme, isSelected, onClick }: ThemePresetCardP
             onClick={onClick}
             className={cn(
                 "relative w-full rounded-lg overflow-hidden transition-all duration-200",
-                "hover:scale-105 hover:shadow-lg",
-                isSelected && "ring-4 ring-purple-500 ring-offset-2 scale-105"
+                "hover:scale-105 hover:shadow-lg border-2 border-white ",
+                isSelected && "ring-4 ring-purple-300  ring-offset-2 scale-105"
             )}
         >
             {/* Theme Preview */}
-            <div className="flex h-24 w-full">
+            <div className="flex h-24 w-full cursor-pointer">
                 {/* Sidebar Preview */}
                 <div
-                    className="w-1/3 flex items-center justify-center"
+                    className="w-1/3 flex items-center flex-col justify-center"
                     style={{ backgroundColor: theme.sidebarBg }}
                 >
-                    <div className="w-8 h-8 rounded-md bg-white/10 backdrop-blur-sm" />
+                    <div className="w-11 h-2 -left-3.5 top-5 absolute rounded-md bg-white/10 backdrop-blur-sm" />
+                    <div className="w-12 -left-2.5 top-2.5 absolute  h-2 rounded-md bg-white/10 backdrop-blur-sm" />
+                    <div className="w-8 -left-2.5 top-7.5 absolute  h-2 rounded-md bg-white/10 backdrop-blur-sm" />
+                    <div className="w-2 left-0.5 rounded-2xl bottom-2 absolute  h-2  bg-white/10 backdrop-blur-sm" />
                 </div>
 
                 {/* Content Preview */}

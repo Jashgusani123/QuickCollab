@@ -6,7 +6,7 @@ import { Bell, HomeIcon,  MessagesSquareIcon, MoreHorizontal } from "lucide-reac
 
 export const Sidebar = ()=>{
     return (
-        <aside className="w-[70px] h-full  flex flex-col gap-y-4 items-center pt-[9px] pb-4">
+        <aside className="w-[70px] h-full bg_dark flex flex-col gap-y-4 items-center pt-[9px] pb-4">
             <WorkspaceSwitcher />
             <SidebarButtons icon={HomeIcon } label="Home" isActive />
             <SidebarButtons icon={MessagesSquareIcon } label="DMs"  />

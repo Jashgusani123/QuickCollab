@@ -6,7 +6,6 @@ import { generateCompleteTheme } from '@/lib/theme-engine-v2';
 interface ThemeState {
     currentTheme: Theme;
     setTheme: (theme: Theme) => void;
-    setCustomTheme: (sidebarBg: string, contentBg: string) => void;
     resetToDefault: () => void;
 }
 
@@ -18,17 +17,6 @@ export const useThemeStore = create<ThemeState>()(
             setTheme: (theme: Theme) => {
                 set({ currentTheme: theme });
                 applyThemeToDOM(theme);
-            },
-
-            setCustomTheme: (sidebarBg: string, contentBg: string) => {
-                const customTheme: Theme = {
-                    name: 'Custom',
-                    sidebarBg,
-                    contentBg,
-                    isCustom: true,
-                };
-                set({ currentTheme: customTheme });
-                applyThemeToDOM(customTheme);
             },
 
             resetToDefault: () => {

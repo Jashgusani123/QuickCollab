@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import { User as UserIcon } from "lucide-react";    
 import Link from "next/link";
+import { it } from "node:test";
 import { useMemo } from "react";
 
 const userItemVariants = cva(
@@ -14,9 +15,8 @@ const userItemVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-[#f9edffcc]",
-        active: "text-[#481349] bg-white/90 hover:bg-white/90",
-        rightMargin: "mr-3",
+        default: "text-(--message-author-text) hover:bg-[#b9b6b629]",
+        active: "bg-(--sidebar-active) text-white hover:bg-(--sidebar-active)",
       },
     },
     defaultVariants: {
@@ -28,11 +28,12 @@ const userItemVariants = cva(
 interface UserItemProps {
   id: ID["memberId"];
   label?: string;
+  itsYou?:boolean;
   image?: string;
   variant?: VariantProps<typeof userItemVariants>["variant"];
 }
 
-export const UserItem = ({ id, label, image, variant }: UserItemProps) => {
+export const UserItem = ({ id, label, image, variant, itsYou }: UserItemProps) => {
   const workspaceId = useWorkspaceId();
   const colorHex = useMemo(() => generateDarkPalette(1), []);
 
@@ -55,7 +56,7 @@ export const UserItem = ({ id, label, image, variant }: UserItemProps) => {
           </AvatarFallback>
         </Avatar>
         
-        <span className="text-sm truncate">{label}</span>
+        <span className="text-sm truncate">{label}{itsYou && " ( You )"}</span>
       </Link>
     </Button>
   );

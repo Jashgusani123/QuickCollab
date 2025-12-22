@@ -70,7 +70,7 @@ export const Header = ({ channelName }: HeaderProps) => {
     };
 
     return (
-        <div className="bg-white border-b h-[49px] flex items-center px-4 overflow-hidden">
+        <div className="bg-(--content-bg) border-b border-(--content-border) h-[49px] flex items-center px-4 overflow-hidden">
             <ConfirmDialog />
             <Dialog>
                 <DialogTrigger asChild>
@@ -80,27 +80,26 @@ export const Header = ({ channelName }: HeaderProps) => {
                     </Button>
                 </DialogTrigger>
 
-                <DialogContent className="p-0 bg-gray-50 overflow-hidden">
-                    <DialogHeader className="p-4 border-b bg-white">
+                <DialogContent className="p-0 bg-white overflow-hidden">
+                    <DialogHeader className="p-4 border-b border-(--content-border) bg-(--content-bg)">
                         <DialogTitle>
                              # {channelName}
                         </DialogTitle>
                     </DialogHeader>
 
-                    <div className="px-4 pb-4 flex flex-col gap-y-2">
+                    <div className="px-4 pb-4 flex flex-col gap-y-2 bg-white">
                         {/* Edit */}
                         <Dialog open={editOpen} onOpenChange={handleEditOpen}>
                             <DialogTrigger asChild>
-                                <div className="px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50">
-                                    <div className="flex items-center justify-between">
-                                        <p className="text-sm font-semibold">Channel name</p>
+                                <div className="px-5 py-4 bg-white rounded-lg cursor-pointer border hover:bg-gray-50">
+                                    <div className="flex items-start justify-between">
+                                        <p className="text-sm font-semibold">Channel Name</p>
                                         {member?.role === "admin" && (
-                                            <p className="text-sm text-[#1264a3] hover:underline font-semibold">
-                                                Edit
-                                            </p>
+                                        
+                                        <p className="text-sm text-[#1264a3] hover:underline font-semibold">Edit</p>
                                         )}
                                     </div>
-                                    <p className="text-sm">
+                                        <p className="text-sm">
                                         # {channelName}
                                     </p>
                                 </div>
@@ -122,7 +121,7 @@ export const Header = ({ channelName }: HeaderProps) => {
                                         placeholder="e.g. plan-budget"
                                     />
                                     <DialogFooter>
-                                        <DialogClose asChild>
+                                        <DialogClose asChild >
                                             <Button variant={"outline"} disabled={updatingChannel}>
                                                 Cancel
                                             </Button>
@@ -140,7 +139,7 @@ export const Header = ({ channelName }: HeaderProps) => {
                             <button
                                 disabled={deletingChannel}
                                 onClick={handleDelete}
-                                className="flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg cursor-pointer border hover:bg-gray-50 text-rose-600"
+                                 className="flex items-center gap-x-2 px-5 py-4 bg-white rounded-lg border cursor-pointer hover:bg-gray-50 text-rose-600"
                             >
                                 <TrashIcon className="size-4" />
                                 <p className="text-sm font-semibold">

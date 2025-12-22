@@ -11,7 +11,7 @@ export const SettingsButton = () => {
     return (
         <>
             <div
-                className="flex flex-col items-center justify-start bg-accent-foreground/15 rounded-md p-1 gap-y-0.5 cursor-pointer group"
+                className="flex flex-col items-center justify-start sidebar-surface-1 rounded-md p-1 gap-y-0.5 cursor-pointer group"
                 onClick={() => setOpen(true)}
             >
                 <Button

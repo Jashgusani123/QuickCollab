@@ -169,6 +169,25 @@ export function getContrastRatio(hex1: string, hex2: string): number {
 }
 
 /**
+ * Auto-fix extremely bright colors by reducing brightness
+ * Prevents UI from being blinding on pure white or bright colors
+ */
+export function autoFixBrightness(hex: string): string {
+    const lum = getLuminance(hex);
+
+    // If luminance is extremely high (> 0.85), reduce brightness
+    if (lum > 0.85) {
+        const rgb = hexToRgb(hex);
+        const hsl = rgbToHsl(rgb);
+        // Reduce lightness by 20% for very bright colors
+        hsl.l = Math.max(0, hsl.l - 20);
+        return rgbToHex(hslToRgb(hsl));
+    }
+
+    return hex;
+}
+
+/**
  * Get high-contrast text color (WCAG AAA)
  */
 export function getContrastText(bgHex: string): string {
@@ -274,6 +293,8 @@ export interface SidebarPalette {
 }
 
 export function generateSidebarPalette(baseColor: string): SidebarPalette {
+    // Auto-fix extremely bright colors
+    baseColor = autoFixBrightness(baseColor);
     const dark = isDark(baseColor);
 
     if (dark) {
@@ -408,6 +429,8 @@ export interface ContentPalette {
 }
 
 export function generateContentPalette(baseColor: string): ContentPalette {
+    // Auto-fix extremely bright colors
+    baseColor = autoFixBrightness(baseColor);
     const dark = isDark(baseColor);
 
     if (dark) {

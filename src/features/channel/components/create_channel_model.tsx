@@ -24,7 +24,7 @@ export const CreateChannelModel = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\s+/g, "-").toLowerCase(); 
+    const value = e.target.value.replace(/\s+/g, "-").toLowerCase();
     setName(value);
   };
 
@@ -34,15 +34,15 @@ export const CreateChannelModel = () => {
     createChannel(
       { workspaceId, name },
       {
-        onSuccess: (id:any) => {
-          router.push(`/w/${workspaceId}/c/${id.data.channel._id}`)
+        onSuccess: (id: any) => {
+          router.push(`/w/${workspaceId}/c/${id.data.channel._id}`);
           toast.success("Channel created");
           handleClose();
         },
-        onError: (err:any) => {
+        onError: (err: any) => {
           let message = "Failed to create channel";
-          if(err.status === 409){
-            message = "Channel name already exists in this workspace"
+          if (err.status === 409) {
+            message = "Channel name already exists in this workspace";
           }
           toast.error(message);
         },

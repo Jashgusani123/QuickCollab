@@ -51,17 +51,17 @@ export const WorkspaceHeader = ({
               className="font-semibold text-lg p-1.5 flex-1 min-w-0 max-w-fit flex justify-start overflow-hidden"
               size={"sm"}
             >
-              <span className="truncate">{workspace.name}</span>
-              <ChevronDown className="size-4 ml-1 shrink-0" />
+              <span className="truncate text-white">{workspace.name}</span>
+              <ChevronDown className="size-4 ml-1 shrink-0 text-sidebar-text" />
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent side="bottom" align="start" className="w-64 ">
+          <DropdownMenuContent side="bottom" align="start" className="w-64">
             <DropdownMenuItem className="cursor-pointer capitalize">
-              <div className="size-9 relative overflow-hidden bg-[#616061] text-white font-semibold text-xl rounded-md flex items-center justify-center mr-2 ">
+              <div className="size-9 relative overflow-hidden bg-(--sidebar-active) text-sidebar-text font-semibold text-xl rounded-md flex text-white items-center justify-center mr-2">
                 {workspace.name.charAt(0).toUpperCase()}
               </div>
               <div className="flex flex-col items-start ">
-                <p className="font-bold">{workspace.name}</p>
+                <p className="font-bold ">{workspace.name}</p>
                 <p className="text-xs text-muted-foreground">
                   Active workspace
                 </p>
@@ -90,15 +90,15 @@ export const WorkspaceHeader = ({
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        <div className="flex items-center gap-0.5">
+        <div className="flex items-center gap-0.5 ">
           <Hint label="Filters" side="bottom">
             <Button variant={"transparent"} size="iconSm">
-              <ListFilterIcon className="size-4" />
+              <ListFilterIcon className="size-4 text-sidebar-text" />
             </Button>
           </Hint>
           <Hint label="New Message" side="bottom">
             <Button variant={"transparent"} size="iconSm">
-              <SquarePen className="size-4" />
+              <SquarePen className="size-4 text-sidebar-text" />
             </Button>
           </Hint>
         </div>

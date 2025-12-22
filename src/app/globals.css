@@ -7,6 +7,19 @@
    COMPLETE THEME SYSTEM V2
    80+ CSS Variables for Full UI Coverage
    ================================================================ */
+::selection {
+  background: var(--message-author-text);   /* your new highlight color */
+  color: #000;           /* text color inside selection */
+}
+.imagei{
+  mix-blend-mode: lighten;
+}
+
+/* For Firefox */
+::-moz-selection {
+  background: var(--message-author-text);
+  color: #000;
+}
 
 :root {
   height: 100%;
@@ -114,6 +127,7 @@
 
 body, html {
   height: 100%;
+  background-color: white;
 }
 
 /* ================================================================
@@ -123,6 +137,13 @@ body, html {
 .bg_dark {
   background-color: var(--sidebar-bg);
   color: var(--sidebar-text);
+}
+
+.innerHeading {
+  color: var(--sidebar-active);
+}
+.innerHeading:hover{
+  background-color: var(--content-text);
 }
 
 .bg_light {
@@ -295,6 +316,11 @@ body, html {
 
 .message-author {
   color: var(--message-author-text);
+  font-weight: 600;
+}
+
+.sidebar_names{
+ color: var(--message-author-text);
   font-weight: 600;
 }
 
@@ -640,3 +666,35 @@ body, html {
   width: max-content;
   z-index: 10;
 }
+
+@keyframes logoFade {
+  0% {
+    opacity: 0.1;
+    transform: scale(0.95);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.1;
+    transform: scale(0.95);
+  }
+}
+
+.qc-glow-loader {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: linear-gradient(90deg, var(--sidebar-bg),var(--message-author-text), #dbdbdc);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: qcGlow 1s infinite linear;
+}
+
+@keyframes qcGlow {
+  0%   { background-position: 0% }
+  100% { background-position: 200% }
+}
+

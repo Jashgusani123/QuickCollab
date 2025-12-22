@@ -8,9 +8,27 @@ export const useCreateMessage = (channelId: string) => {
   return useMutation({
     mutationFn: (formData: FormData) => messageApis.create(formData),
 
-    onSuccess: () => {
+    onSuccess: (_res, formData) => {
+      const parentMessageId = formData.get("parentMessageId");
+
+      // 🔹 THREAD REPLY
+      if (parentMessageId) {
+        // 1️⃣ Refresh thread messages only
+        queryClient.invalidateQueries({
+          queryKey: ["messages", "thread", parentMessageId],
+        });
+
+        // 2️⃣ Update parent message thread count / preview
+        queryClient.invalidateQueries({
+          queryKey: ["message-by-id", parentMessageId],
+        });
+
+        return;
+      }
+
+      // 🔹 CHANNEL MESSAGE (normal message)
       queryClient.invalidateQueries({
-        queryKey: ["messages", channelId],
+        queryKey: ["messages", "channel", channelId],
       });
     },
 

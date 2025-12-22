@@ -8,12 +8,12 @@ import {cva, type VariantProps} from "class-variance-authority";
 import { cn } from "@/lib/utils"
 
 const sidebarItemVariants = cva(
-    "flex items-center gap-2.5 justify-start font-normal h-7 px-[18px] text-sm overflow-hidden",
+    "flex items-center gap-2.5 justify-start font-normal h-7 px-[18px] text-sm overflow-hidden transition-colors rounded-md",
     {
         variants:{
             variant:{
-                default:"text-[#f9edffcc]",
-                active:"text-[#481349] bg-white/90 hover:bg-white/90",
+                default:"sidebar_names hover:bg-[#b9b6b629]",
+                active:"bg-(--sidebar-active) text-white hover:bg-(--sidebar-active)",
                 leftMargin:"ml-1"
             }
         },
@@ -35,8 +35,8 @@ export const SidebarItem = ({label , id , icon:Icon , variant}:SidebarItemProps)
     return (
         <Button asChild variant={"transparent"} size={"sm"} className={cn(sidebarItemVariants({variant}))}>
             <Link href={`/w/${workspaceId}/c/${id}`}>
-                <Icon  className="size-3.5 mr-1 shrink-0"/>
-                <span className="text-sm truncate">{label}</span>
+                <Icon  className="size-3.5 mr-1 shrink-0 "/>
+                <span className="text-sm truncate ">{label}</span>
             </Link>
         </Button>
     )

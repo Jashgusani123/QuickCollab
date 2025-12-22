@@ -1,49 +1,49 @@
 export interface Theme {
+    name: string;
     sidebarBg: string;
     contentBg: string;
-    name: string;
-    isCustom?: boolean;
 }
 
 export const THEME_PRESETS: Theme[] = [
     {
         name: "Default",
-        sidebarBg: "#1A1A1A",
+        sidebarBg: "#1A1A1C",
+        contentBg: "#FFFFFF",
+    },
+    {
+        name: "Ocean",
+        sidebarBg: "#0B2239",
         contentBg: "#FFFFFF",
     },
     {
         name: "Violet",
-        sidebarBg: "#2D0A31",
-        contentBg: "#F8F1FB",
+        sidebarBg: "#2D1B4E",
+        contentBg: "#FFFFFF",
     },
     {
         name: "Forest",
-        sidebarBg: "#0D2410",
-        contentBg: "#F1FFF3",
-    },
-    {
-        name: "Ocean",
-        sidebarBg: "#05293D",
-        contentBg: "#EAFBFF",
-    },
-    {
-        name: "Sunset",
-        sidebarBg: "#3D1505",
-        contentBg: "#FFF3EA",
+        sidebarBg: "#1B4D3E",
+        contentBg: "#FFFFFF",
     },
     {
         name: "Rose",
-        sidebarBg: "#3D0520",
-        contentBg: "#FFEAF5",
-    },
-    {
-        name: "Midnight",
-        sidebarBg: "#0A0A1A",
-        contentBg: "#E8E8F0",
+        sidebarBg: "#4D1B35",
+        contentBg: "#FFFFFF",
     },
     {
         name: "Amber",
-        sidebarBg: "#2D1F05",
-        contentBg: "#FFF8EA",
+        sidebarBg: "#5C3D1A",
+        contentBg: "#FFFFFF",
     },
+    {
+        name: "Midnight",
+        sidebarBg: "#0F1525",
+        contentBg: "#FFFFFF",
+    },
+    {
+        name: "Sunset",
+        sidebarBg: "#5C2F1A",
+        contentBg: "#FFFFFF",
+    },
+  
 ];

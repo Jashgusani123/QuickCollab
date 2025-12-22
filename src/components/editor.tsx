@@ -67,9 +67,6 @@ const Editor = ({
     disabledRef.current = disabled;
   });
 
-  // -------------------------
-  // INIT QUILL EDITOR
-  // -------------------------
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -144,9 +141,7 @@ const Editor = ({
     };
   }, [innerRef]);
 
-  // -------------------------
-  // TOGGLE TOOLBAR
-  // -------------------------
+
   const toggleToolbar = () => {
     setIsToolbarVisible((prev) => {
       const next = !prev;
@@ -157,9 +152,7 @@ const Editor = ({
     });
   };
 
-  // -------------------------
-  // EMOJI INSERTION
-  // -------------------------
+
   const onEmojiSelect = (emoji: any) => {
     const quill = quillRef.current;
     if (!quill) return;
@@ -188,7 +181,7 @@ const Editor = ({
 
       <div
         className={cn(
-          "flex flex-col border border-slate-200 rounded-md overflow-hidden focus-within:border-slate-300 focus-within:shadow-sm transition bg-white",
+          "editor-container flex flex-col border rounded-md overflow-hidden focus-within:shadow-sm transition",
           disabled && "opacity-50"
         )}
       >
@@ -270,7 +263,7 @@ const Editor = ({
                     image,
                   })
                 }
-                className="bg-[#007a5a] hover:bg-[#007a5a]/80 text-white"
+                className="bg-(--sidebar-active) hover:bg-(--sidebar-hover) text-white"
               >
                 Save
               </Button>
@@ -282,8 +275,8 @@ const Editor = ({
               className={cn(
                 "ml-auto",
                 isEmpty
-                  ? "bg-white hover:bg-white text-foreground"
-                  : "bg-[#007a5a] hover:bg-[#007a5a]/80 text-white"
+                  ? "bg-(--content-surface-1) hover:bg-(--content-surface-2) text-content-text"
+                  : "bg-(--sidebar-active) hover:bg-(--sidebar-hover) "
               )}
               size="iconSm"
               disabled={disabled || isEmpty}

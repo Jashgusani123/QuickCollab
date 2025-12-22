@@ -21,7 +21,7 @@ function DropdownMenuContent({
       <DropdownMenuPrimitive.Content
         sideOffset={sideOffset}
         className={cn(
-          "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md",
+          "z-50 min-w-[8rem] bg-white overflow-hidden rounded-md border-(--content-border) p-1 text-content-text shadow-md",
           "data-[state=open]:animate-in data-[state=closed]:animate-out",
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
           "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
@@ -44,9 +44,9 @@ function DropdownMenuItem({
   return (
     <DropdownMenuPrimitive.Item
       className={cn(
-        "relative flex cursor-pointer select-none items-center rounded-sm py-1.5 px-2 text-sm outline-none transition-colors",
+        "relative flex cursor-pointer bg-white hover:bg-(--content-text-muted) select-none items-center rounded-sm py-1.5 px-2 text-sm outline-none transition-colors",
         "data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-        "focus:bg-accent focus:text-accent-foreground",
+        "focus:bg-(--content-active) focus:text-content-text",
         inset && "pl-8",
         className
       )}

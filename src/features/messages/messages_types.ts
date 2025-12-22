@@ -11,6 +11,7 @@ export interface MemberType {
 }
 
 export interface ReactionType {
+  _id?:string;
   value: string;
   count: number;
   memberIds: string[];

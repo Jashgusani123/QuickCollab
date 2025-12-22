@@ -17,8 +17,30 @@ export const useGetMessages = ({
   limit = 20,
 }: UseGetMessagesProps) => {
 
+  const messageType = parentMessageId
+    ? "thread"
+    : conversationId
+    ? "conversation"
+    : "channel";
+
+  const queryKey =
+    messageType === "thread"
+      ? ["messages", "thread", parentMessageId, page, limit]
+      : messageType === "conversation"
+      ? ["messages", "conversation", conversationId, page, limit]
+      : ["messages", "channel", channelId, page, limit];
+
+  const enabled =
+    messageType === "thread"
+      ? !!parentMessageId
+      : messageType === "conversation"
+      ? !!conversationId
+      : !!channelId;
+
   return useQuery({
-    queryKey: ["messages", channelId],
+    queryKey,
+    enabled,
+    staleTime: 1000,
     queryFn: async () => {
       const res = await messageApis.listMessages({
         channelId,
@@ -30,7 +52,5 @@ export const useGetMessages = ({
 
       return res.data; // { data, pagination }
     },
-    enabled: !!channelId,
-    staleTime: 1000,
   });
 };

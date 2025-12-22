@@ -24,7 +24,7 @@ export const WorkspaceSection = ({
       <div className="flex items-center px-2 group min-w-0">
         <Button
           variant={"transparent"}
-          className="p-0.5 text-sm text-[#f9edffcc] shrink-0 size-6"
+          className="p-0.5 text-sm text(--color-sky-700) shrink-0 size-6"
           onClick={toggle}
         >
           <FaCaretDown
@@ -34,10 +34,10 @@ export const WorkspaceSection = ({
         <Button
           variant={"transparent"}
           size={"sm"}
-          className="group px-1.5 text-sm text-[#f9edffcc] h-7 justify-start items-center flex-1 min-w-0"
+          className="group px-1.5 text-sm text(--color-sky-700) hover:text(--color-sky-700) h-7 justify-start items-center flex-1 min-w-0"
           onClick={toggle}
         >
-          <span className="truncate">{label}</span>
+          <span className="truncate text-white">{label}</span>
         </Button>
 
         {onNew && (
@@ -46,7 +46,7 @@ export const WorkspaceSection = ({
               onClick={onNew}
               variant={"transparent"}
               size={"iconSm"}
-              className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto p-0.5 text-sm size-6 shrink-0"
+              className="opacity-0 group-hover:opacity-100 transition-opacity ml-auto p-0.5 text-sm text(--color-sky-700) size-6 shrink-0"
             >
               <Plus className="size-5" />
             </Button>
