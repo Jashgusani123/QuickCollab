@@ -7,8 +7,8 @@ export async function POST() {
   // Clear the token cookie
   res.cookies.set("token", "", {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: true,
+    sameSite: "none",
     path: "/",
     maxAge: 0, // expires immediately
   });
