@@ -50,14 +50,10 @@ export const MessageList = ({
   const { data: currentMember } = useCurrentMember(workspaceId);
 
   // 1️⃣ Deduplicate messages by ID
-  const uniqueMessages = data
-    ? Array.from(new Map(data.map(m => [m.id, m])).values())
-    : [];
+  const uniqueMessages = data ? Array.from(new Map(data.map((m) => [m.id, m])).values()) : [];
 
   // 2️⃣ Sort OLDEST → NEWEST
-  uniqueMessages.sort(
-    (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-  );
+  uniqueMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
   // 3️⃣ Group by date
   const groupedMessages = uniqueMessages.reduce(
@@ -71,10 +67,7 @@ export const MessageList = ({
   );
 
   return (
-    <div className="message-scrollbar flex flex-1 flex-col overflow-y-auto pb-4">
-            {variant === "channel" && channelName && channelCreateTime && (
-        <ChannelHero name={channelName} creationTime={channelCreateTime} />
-      )}
+    <div className="message-scrollbar flex flex-1 flex-col-reverse overflow-y-auto pb-4">
       {/* Load older messages */}
       <div
         className="h-1"
@@ -99,7 +92,7 @@ export const MessageList = ({
         <div key={dateKey}>
           <div className="relative my-2 text-center">
             <hr className="absolute inset-x-0 top-1/2 border-t border-gray-300" />
-            <span className="relative bg-white px-3 py-1 text-xs rounded-full border shadow-sm">
+            <span className="relative rounded-full border bg-white px-3 py-1 text-xs shadow-sm">
               {formatDateLabel(dateKey)}
             </span>
           </div>
@@ -110,10 +103,8 @@ export const MessageList = ({
             const isCompact =
               !!prevMessage &&
               prevMessage.user.id === message.user.id &&
-              differenceInMinutes(
-                new Date(message.createdAt),
-                new Date(prevMessage.createdAt)
-              ) === 0;
+              differenceInMinutes(new Date(message.createdAt), new Date(prevMessage.createdAt)) ===
+                0;
 
             return (
               <Message
@@ -139,9 +130,9 @@ export const MessageList = ({
           })}
         </div>
       ))}
-
-
+      {variant === "channel" && channelName && channelCreateTime && (
+        <ChannelHero name={channelName} creationTime={channelCreateTime} />
+      )}
     </div>
   );
 };
-

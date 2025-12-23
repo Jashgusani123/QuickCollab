@@ -15,7 +15,7 @@ interface AuthContextType {
   loading: boolean;
   refreshUser: () => Promise<void>;
   logout: () => Promise<void>;
-  setUser:(value:User)=>void
+  setUser: (value: User) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -23,7 +23,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   refreshUser: async () => {},
   logout: async () => {},
-  setUser(value) { },
+  setUser(value) {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,19 +32,25 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshUser = async () => {
     try {
-      const res = await authApi.me();
-      setUser(res.data.user);   
+      const res = await authApi.me(); 
+      setUser(res.data.user);
     } catch {
-      setUser(null);
+      setUser(null); 
     } finally {
       setLoading(false);
     }
   };
 
+  // Logout user
   const logout = async () => {
-    await authApi.logout();
-    setUser(null);
-    window.location.href = "/auth";
+    try {
+      await fetch("/api/auth/logout", { method: "POST" }); 
+    } catch (err) {
+      console.error("Logout failed", err);
+    } finally {
+      setUser(null);
+      window.location.href = "/auth";
+    }
   };
 
   useEffect(() => {
@@ -52,7 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser, logout , setUser }}>
+    <AuthContext.Provider value={{ user, loading, refreshUser, logout, setUser }}>
       {children}
     </AuthContext.Provider>
   );
