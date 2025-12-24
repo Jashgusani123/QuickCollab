@@ -10,36 +10,35 @@ type User = {
 } | null;
 
 export const useAuthentication = () => {
-  const { refreshUser, setUser } = useAuthContext();
+  const { refreshUser  , setUser} = useAuthContext();
 
   const loginUser = async ({ email, password }: LoginUserBody) => {
-    const res = await fetch("/api/auth/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-    if (res.ok) {
-      const data = await res.json();
-      setUser(data.user);
-      return true;
+    try {
+      const response = await authApi.login({ email, password });
+      
+      if (response.statusText === "OK") {
+        setUser(response.data.user)
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
     }
     return false;
   };
-
-  const registerUser = async ({ name, email, password }: RegisterUserBody) => {
-    const res = await fetch("/api/auth/register", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (res.ok) {
-      const data = await res.json();
-      setUser(data.user);
-      return true;
+ const registerUser = async ({ name, email, password }:RegisterUserBody) => {
+    try {
+      const res = await authApi.register({ name, email, password });
+      if (res.statusText === "OK") {
+        setUser(res.data.user)
+        // await refreshUser(); // ✅ Automatically log user in
+        return true;
+      }
+    } catch (e) {
+      console.log(e);
     }
     return false;
   };
-
-  return { loginUser, registerUser };
+  return { loginUser , registerUser };
 };
+
+
