@@ -1,31 +1,49 @@
 "use client";
+
 import { useAuthContext } from "@/context/auth.context";
-import { UserButton } from "@/features/auth/components/user_button";
 import { useCreateWorkspaceModel } from "@/features/workspace/store/use_create_workspace_model";
 import { getAllworkspacesQuery } from "@/features/workspace/hooks/use_workspaces";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import QuickCollabTypingLoader from "@/components/quick_collab_typing_loader";
 
 export default function Home() {
-  const { user } = useAuthContext();
+  const { user, loading: authLoading } = useAuthContext();
   const [open, setOpen] = useCreateWorkspaceModel();
   const router = useRouter();
-  const { data: workspaces, isLoading } = getAllworkspacesQuery();
+
+  const {
+    data: workspaces,
+    isLoading: workspacesLoading,
+  } = getAllworkspacesQuery({
+    enabled: !!user, 
+  });
 
   useEffect(() => {
-    if (isLoading || !workspaces) return;
+    if (authLoading) return;
+
+    if (!user) {
+      router.replace("/auth");
+    }
+  }, [authLoading, user, router]);
+
+  useEffect(() => {
+    if (!user || workspacesLoading || !workspaces) return;
 
     if (workspaces.length > 0) {
       router.replace(`/w/${workspaces[0]._id}`);
     } else {
       setOpen(true);
     }
-  }, [user, setOpen, workspaces]);
+  }, [user, workspacesLoading, workspaces, setOpen, router]);
 
-  return isLoading && !open ? (
-    <div className="flex w-full h-full justify-center items-center">
-      <QuickCollabTypingLoader />{" "}
-    </div>
-  ) : null;
+  if (authLoading || workspacesLoading) {
+    return (
+      <div className="flex w-full h-full justify-center items-center">
+        <QuickCollabTypingLoader />
+      </div>
+    );
+  }
+
+  return null;
 }

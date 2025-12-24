@@ -23,7 +23,7 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   refreshUser: async () => {},
   logout: async () => {},
-  setUser(value) {},
+  setUser: () => {},
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,8 +32,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const refreshUser = async () => {
     try {
-      const res = await authApi.me();
-      setUser(res.data.user);   
+      const res = await authApi.me(); // GET /api/auth/me
+      setUser(res.data.user);
     } catch {
       setUser(null);
     } finally {
@@ -42,9 +42,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    await authApi.logout();
-    setUser(null);
-    window.location.href = "/auth";
+    try {
+      await authApi.logout();
+    } finally {
+      setUser(null);
+      window.location.replace("/auth");
+    }
   };
 
   useEffect(() => {
@@ -52,7 +55,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser, logout , setUser }}>
+    <AuthContext.Provider
+      value={{ user, loading, refreshUser, logout, setUser }}
+    >
       {children}
     </AuthContext.Provider>
   );
