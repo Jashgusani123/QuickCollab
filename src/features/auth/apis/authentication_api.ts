@@ -16,27 +16,29 @@ export const useAuthentication = () => {
     try {
       const response = await authApi.login({ email, password });
       
-      if (response.statusText === "OK") {
-        setUser(response.data.user)
-        return true;
+      if (response.status !== 200) {
+        return false;
       }
+      setUser(response.data.user)
+      return true;
     } catch (error) {
       console.log(error);
+      return false;
     }
-    return false;
   };
  const registerUser = async ({ name, email, password }:RegisterUserBody) => {
     try {
       const res = await authApi.register({ name, email, password });
-      if (res.statusText === "OK") {
-        setUser(res.data.user)
+      if (res.status !== 200) {
         // await refreshUser(); // ✅ Automatically log user in
-        return true;
+        return false;
       }
+      setUser(res.data.user)
+      return true;
     } catch (e) {
       console.log(e);
+      return false;
     }
-    return false;
   };
   return { loginUser , registerUser };
 };
