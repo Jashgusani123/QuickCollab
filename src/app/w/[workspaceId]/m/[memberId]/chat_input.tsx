@@ -10,9 +10,10 @@ const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
 
 interface ChatInputProps {
   placeholder: string;
+  conversationId:string
 }
 
-export const ChatInput = ({ placeholder }: ChatInputProps) => {
+export const ChatInput = ({ placeholder , conversationId}: ChatInputProps) => {
   const [editorKey, setEditorKey] = useState(0);
   const editorRef = useRef<Quill | null>(null);
 
@@ -26,10 +27,11 @@ export const ChatInput = ({ placeholder }: ChatInputProps) => {
 
     const form = new FormData();
     form.append("body", body);
-    form.append("channelId", channelId);
+    form.append("conversationId", conversationId);
     form.append("workspaceId", workspaceId);
     if (image) form.append("image", image);
-
+    console.log(conversationId );
+    
     createMessage(form, {
       onSuccess: () => {
         setEditorKey((prev) => prev + 1); // reset editor

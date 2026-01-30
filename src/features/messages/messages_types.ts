@@ -2,7 +2,7 @@ export interface UserType {
   id: string;
   name: string;
   email: string;
-  avatar?: string | null; // optional since you don't have avatar yet
+  image?: string | null; // optional since you don't have avatar yet
 }
 
 export interface MemberType {

@@ -8,7 +8,7 @@ import { useChannelId } from "@/hooks/use_channel_id";
 import { TriangleAlert } from "lucide-react";
 import { useState } from "react";
 import { ChatInput } from "./chat_input";
-import { Header } from "./header";
+import { Header } from "../[channelId]/header";
 
 const LIMIT = 20;
 
@@ -18,10 +18,7 @@ const ChannelIdPage = () => {
 
   const { data: channel, isLoading: channelLoading } = useGetChannel(channelId);
 
-  const {
-    data: msgResponse,
-    isFetching: isLoadingMore,
-  } = useGetMessages({
+  const { data: msgResponse, isFetching: isLoadingMore } = useGetMessages({
     channelId,
     page,
     limit: LIMIT,
@@ -36,12 +33,11 @@ const ChannelIdPage = () => {
   };
 
   const canLoadMore =
-    !!msgResponse?.pagination &&
-    msgResponse.pagination.page < msgResponse.pagination.totalPages;
+    !!msgResponse?.pagination && msgResponse.pagination.page < msgResponse.pagination.totalPages;
 
   if (channelLoading) {
     return (
-      <div className="h-full flex items-center justify-center">
+      <div className="flex h-full items-center justify-center">
         <QuickCollabTypingLoader />
       </div>
     );
@@ -49,15 +45,15 @@ const ChannelIdPage = () => {
 
   if (!channel) {
     return (
-      <div className="h-full flex items-center flex-col justify-center">
-        <TriangleAlert className="size-6 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground">Channel not found</span>
+      <div className="flex h-full flex-col items-center justify-center">
+        <TriangleAlert className="text-muted-foreground size-6" />
+        <span className="text-muted-foreground text-sm">Channel not found</span>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <Header channelName={channel.name} />
 
       <MessageList

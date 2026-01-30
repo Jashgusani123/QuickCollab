@@ -36,7 +36,7 @@ interface UserItemProps {
 export const UserItem = ({ id, label, image, variant, itsYou }: UserItemProps) => {
   const workspaceId = useWorkspaceId();
   const colorHex = useMemo(() => generateDarkPalette(1), []);
-
+  
   return (
     <Button
       variant="transparent"

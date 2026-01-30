@@ -67,9 +67,8 @@ export const Thread = ({ messageId, onCloseMessage }: ThreadProps) => {
     limit: LIMIT,
   });
 
-  const { mutate: createMessage, isPending } = useCreateMessage(channelId);
+  const { mutate: createMessage, isPending } = useCreateMessage();
 
-  /* ------------------ EFFECTS ------------------ */
 
   // Reset when opening a new thread
   useEffect(() => {
@@ -199,12 +198,6 @@ export const Thread = ({ messageId, onCloseMessage }: ThreadProps) => {
         }}
       />
 
-      {isLoadingMore && (
-        <div className="my-2 text-center">
-          <Loader2 className="mx-auto size-4 animate-spin" />
-        </div>
-      )}
-
       {/* ✅ THREAD REPLIES */}
       <div className="message-scrollbar flex flex-1 flex-col overflow-y-auto pb-4">
         {Object.entries(groupedReplies).map(([dateKey, messages]) => (
@@ -247,6 +240,13 @@ export const Thread = ({ messageId, onCloseMessage }: ThreadProps) => {
             })}
           </div>
         ))}
+
+        {/* Loader at bottom */}
+        {isLoadingMore && (
+          <div className="my-2 text-center">
+            <Loader2 className="mx-auto size-4 animate-spin" />
+          </div>
+        )}
       </div>
 
       {/* ✅ REPLY EDITOR */}

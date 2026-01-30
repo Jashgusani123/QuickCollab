@@ -17,8 +17,11 @@ import { UserItem } from "./user_item";
 import { useCreateChannelModel } from "@/features/channel/store/use_create_channel_model";
 import { useChannelId } from "@/hooks/use_channel_id";
 import QuickCollabTypingLoader from "@/components/quick_collab_typing_loader";
+import { useMemberId } from "@/hooks/use_member_id";
+import { useCreateConversation } from "@/features/conversation/hook/use_create_conversation";
 
 export const WorkspaceSidebar = () => {
+  const memberId = useMemberId();
   const workspaceId = useWorkspaceId();
   const channelId = useChannelId();
   const { data: member, isLoading: memberLoading } =
@@ -29,7 +32,7 @@ export const WorkspaceSidebar = () => {
     useGetChannels(workspaceId);
   const { data: members, isLoading: membersLoading } =
     useGetAllMembers(workspaceId);
-
+  // const [createConversation] = useCreateConversation();
   const [_open, setOpen] = useCreateChannelModel();
 
   if (workspaceLoading || memberLoading || channelLoading || membersLoading) {
@@ -84,7 +87,7 @@ export const WorkspaceSidebar = () => {
       <WorkspaceSection
         label="Direct Messages"
         hint="New Direact Message"
-        onNew={() => {}}
+        // onNew={() => {}}
       >
         {members?.map((item) => (
           <UserItem
@@ -93,6 +96,7 @@ export const WorkspaceSidebar = () => {
             itsYou={item._id === member._id}
             label={item.user.name}
             image={item.user.image}
+            variant={item._id === memberId ? "active" : "default"}
           />
         ))}
       </WorkspaceSection>

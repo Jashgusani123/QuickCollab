@@ -2,23 +2,23 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { messageApis } from "../apis/messages_apis";
 import { toast } from "sonner";
 
-export const useCreateMessage = (channelId: string) => {
+export const useCreateMessage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: (formData: FormData) => messageApis.create(formData),
 
     onSuccess: (_res, formData) => {
-      const parentMessageId = formData.get("parentMessageId");
+      const channelId = formData.get("channelId") as string | null;
+      const conversationId = formData.get("conversationId") as string | null;
+      const parentMessageId = formData.get("parentMessageId") as string | null;
 
-      // 🔹 THREAD REPLY
+      // 🧵 THREAD REPLY
       if (parentMessageId) {
-        // 1️⃣ Refresh thread messages only
         queryClient.invalidateQueries({
           queryKey: ["messages", "thread", parentMessageId],
         });
 
-        // 2️⃣ Update parent message thread count / preview
         queryClient.invalidateQueries({
           queryKey: ["message-by-id", parentMessageId],
         });
@@ -26,10 +26,20 @@ export const useCreateMessage = (channelId: string) => {
         return;
       }
 
-      // 🔹 CHANNEL MESSAGE (normal message)
-      queryClient.invalidateQueries({
-        queryKey: ["messages", "channel", channelId],
-      });
+      // 💬 CONVERSATION (DM)
+      if (conversationId) {
+        queryClient.invalidateQueries({
+          queryKey: ["messages", "conversation", conversationId],
+        });
+        return;
+      }
+
+      // 📢 CHANNEL MESSAGE
+      if (channelId) {
+        queryClient.invalidateQueries({
+          queryKey: ["messages", "channel", channelId],
+        });
+      }
     },
 
     onError: (error: any) => {

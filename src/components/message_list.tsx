@@ -7,6 +7,7 @@ import { useWorkspaceId } from "@/hooks/use_workspace_id";
 import { useCurrentMember } from "@/features/member/hooks/use_current_member";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
+import { ConversationHero } from "./conversation_hero";
 
 const TIME_THRESHOLD = 5;
 
@@ -20,6 +21,7 @@ interface MessageListProps {
   loadMore: () => void;
   isLoadingMore: boolean;
   canLoadMore: boolean;
+  conversationId?:string;
 }
 
 const formatDateLabel = (dateStr: string) => {
@@ -43,6 +45,7 @@ export const MessageList = ({
   loadMore,
   canLoadMore,
   isLoadingMore,
+  conversationId
 }: MessageListProps) => {
   const [editingId, setEditingId] = useState<string | null>(null);
 
@@ -53,7 +56,7 @@ export const MessageList = ({
   const uniqueMessages = data ? Array.from(new Map(data.map((m) => [m.id, m])).values()) : [];
 
   // 2️⃣ Sort OLDEST → NEWEST
-  uniqueMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
+  // uniqueMessages.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
 
   // 3️⃣ Group by date
   const groupedMessages = uniqueMessages.reduce(
@@ -111,7 +114,8 @@ export const MessageList = ({
                 key={message.id}
                 id={message.id}
                 memberId={message.member.id}
-                authorName={message.user.name}
+                authorName={message.user.name }
+                authorImage={message.user.image ?? undefined}
                 isAuthor={message.member.id === currentMember?._id}
                 reactions={message.reactions}
                 body={message.body}
@@ -123,6 +127,7 @@ export const MessageList = ({
                 threadTimestamp={message.threadTimestamp}
                 isEditing={editingId === message.id}
                 setEditingId={setEditingId}
+                conversationId={conversationId ? conversationId : undefined}
                 isCompact={isCompact}
                 hideThreadButton={variant === "thread"}
               />
@@ -132,6 +137,9 @@ export const MessageList = ({
       ))}
       {variant === "channel" && channelName && channelCreateTime && (
         <ChannelHero name={channelName} creationTime={channelCreateTime} />
+      )}
+      {variant === "conversation" && memberName  && (
+        <ConversationHero name={memberName} image={memberImage ? memberImage : ""} />
       )}
     </div>
   );

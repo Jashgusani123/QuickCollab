@@ -25,7 +25,7 @@ interface MessageProps {
   id: string;
   memberId: string;
   authorName: string;
-  authorImage?: string;
+  authorImage?: string ;
   isAuthor: boolean;
   reactions: ReactionType[];
   body: string;
@@ -40,6 +40,7 @@ interface MessageProps {
   threadImage?: string;
   threadTimestamp?: number;
   parentMessageId?: string;
+  conversationId?:string;
 }
 const formatFullTime = (date: Date) => {
   return `${
@@ -65,6 +66,7 @@ export const Message = ({
   threadImage,
   threadTimestamp,
   parentMessageId: propParentMessageId,
+  conversationId,
 }: MessageProps) => {
   const { parentMessageId: contextParentMessageId, onOpenMessage, onCloseMessage } = usePanel();
   const channelId = useChannelId();
@@ -79,11 +81,12 @@ export const Message = ({
 
   const [isDeleting, setIsDeleting] = useState(false);
   
-  const { mutate: updateMessage, isPending: updatingMessage } = useUpdateMessage({channelId, parentMessageId: parentMessageId || undefined});
-  const { mutate: removeMessage, isPending: removingMessage } = useRemoveMessage({channelId, parentMessageId: parentMessageId || undefined});
+  const { mutate: updateMessage, isPending: updatingMessage } = useUpdateMessage({channelId, parentMessageId: parentMessageId || undefined , conversationId});
+  const { mutate: removeMessage, isPending: removingMessage } = useRemoveMessage({channelId, parentMessageId: parentMessageId || undefined , conversationId});
   const { mutate: reactionToggle, isPending: reactionPending } = useToggleReaction({
     channelId: channelId,
     parentMessageId: parentMessageId || undefined,
+    conversationId
   });
   const isPending = updatingMessage || removingMessage;
 

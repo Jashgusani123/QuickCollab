@@ -49,7 +49,8 @@ export const useGetMessages = ({
         page,
         limit,
       });
-
+      console.log(res);
+      
       return res.data; // { data, pagination }
     },
   });
