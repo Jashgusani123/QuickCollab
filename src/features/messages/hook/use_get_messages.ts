@@ -41,6 +41,7 @@ export const useGetMessages = ({
     queryKey,
     enabled,
     staleTime: 1000,
+    refetchInterval: 60000,
     queryFn: async () => {
       const res = await messageApis.listMessages({
         channelId,
@@ -49,7 +50,6 @@ export const useGetMessages = ({
         page,
         limit,
       });
-      console.log(res);
       
       return res.data; // { data, pagination }
     },

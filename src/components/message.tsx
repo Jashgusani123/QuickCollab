@@ -17,6 +17,7 @@ import { useConfirm } from "@/hooks/use_confirm";
 import { useToggleReaction } from "@/features/reactions/hooks/use_toggle_reaction";
 import { Reactions } from "./reactions";
 import { usePanel } from "@/hooks/use_panel";
+import { ThreadBar } from "./thread_bar";
 
 const Renderer = dynamic(() => import("@/components/renderer"), { ssr: false });
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });
@@ -38,6 +39,7 @@ interface MessageProps {
   hideThreadButton?: boolean;
   threadCount?: number;
   threadImage?: string;
+  threadName?:string | null;
   threadTimestamp?: number;
   parentMessageId?: string;
   conversationId?:string;
@@ -64,6 +66,7 @@ export const Message = ({
   hideThreadButton,
   threadCount,
   threadImage,
+  threadName,
   threadTimestamp,
   parentMessageId: propParentMessageId,
   conversationId,
@@ -166,6 +169,13 @@ export const Message = ({
 
                 {updatedAt ? <span className="text-muted-foreground text-xs">(edited)</span> : null}
                 <Reactions data={reactions} onChange={handleReaction} />
+                <ThreadBar 
+                  count={threadCount}
+                  image={threadImage}
+                  timestamp={threadTimestamp}
+                  onClick={() => onOpenMessage(id)}
+                  name={threadName}
+                />
               </div>
             )}
           </div>
@@ -193,6 +203,7 @@ export const Message = ({
         className={cn(
           "group relative flex flex-col gap-2 p-1.5 px-5",
           isEditing && "bg-[#f2c74433] hover:bg-[#f2c74433]",
+          "message-bubble",
           isDeleting &&
             "origin-bottom scale-y-0 bg-(--sidebar-surface-3)/20 transition-all duration-200"
         )}
@@ -237,6 +248,13 @@ export const Message = ({
               <Thumbnail url={imageUrl} />
               {updatedAt ? <span className="text-muted-foreground text-xs">(edited)</span> : null}
               <Reactions data={reactions} onChange={handleReaction} />
+              <ThreadBar 
+                  count={threadCount}
+                  image={threadImage}
+                  name={threadName}
+                  timestamp={threadTimestamp}
+                  onClick={() => onOpenMessage(id)}
+                />
             </div>
           )}
         </div>

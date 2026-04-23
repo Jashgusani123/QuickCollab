@@ -42,7 +42,7 @@ export const Conversation = ({ id }: ConversationProps) => {
       </div>
     );
   }
-
+  const messagesData = [...(messages?.data ?? [])].reverse();
   return (
     <div className="flex h-full flex-col">
       <Header
@@ -51,7 +51,7 @@ export const Conversation = ({ id }: ConversationProps) => {
         onClick={() => {}}
       />
       <MessageList
-        data={messages?.data ?? []}
+        data={messagesData}
         conversationId={id}
         variant="conversation"
         memberImage={member?.user?.image}

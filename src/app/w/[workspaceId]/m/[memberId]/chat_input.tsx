@@ -30,7 +30,6 @@ export const ChatInput = ({ placeholder , conversationId}: ChatInputProps) => {
     form.append("conversationId", conversationId);
     form.append("workspaceId", workspaceId);
     if (image) form.append("image", image);
-    console.log(conversationId );
     
     createMessage(form, {
       onSuccess: () => {

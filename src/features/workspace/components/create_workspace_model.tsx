@@ -12,13 +12,19 @@ import { useCreateWorkspaceModel } from "@/features/workspace/store/use_create_w
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { createWorkspaceMutation } from "../hooks/use_workspaces";
+import { createWorkspaceMutation, getAllworkspacesQuery } from "../hooks/use_workspaces";
 
 export const CreateWorkspaceModel = () => {
   const [open, setOpen] = useCreateWorkspaceModel();
   const [workspaceName, setWorkspaceName] = useState("");
   const createMutation = createWorkspaceMutation();
   const router = useRouter();
+
+  // ✅ Get all workspaces
+  const { data: workspaces } = getAllworkspacesQuery();
+
+  // ✅ Check if user already has workspace
+  const hasWorkspace = (workspaces?.length ?? 0) > 0;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +35,7 @@ export const CreateWorkspaceModel = () => {
         onSuccess: (res) => {
           const { workspaceId, message } = res.data;
           toast.success(message);
-          setOpen(false); 
+          setOpen(false);
           router.push(`/w/${workspaceId}`);
         },
         onError: () => {
@@ -40,13 +46,27 @@ export const CreateWorkspaceModel = () => {
   };
 
   return (
-    <Dialog open={open}>
+    <Dialog
+      open={open}
+      onOpenChange={(val) => {
+        // ✅ Allow closing ONLY if user already has workspace
+        if (hasWorkspace) {
+          setOpen(val);
+        }
+      }}
+    >
       <DialogContent
-        onInteractOutside={(e) => e.preventDefault()} // ❌ block outside click
-        onEscapeKeyDown={(e) => e.preventDefault()}   // ❌ block ESC
+        onInteractOutside={(e) => {
+          if (!hasWorkspace) e.preventDefault();
+        }}
+        onEscapeKeyDown={(e) => {
+          if (!hasWorkspace) e.preventDefault();
+        }}
       >
         <DialogHeader>
-          <DialogTitle>Create your first workspace</DialogTitle>
+          <DialogTitle>
+            {hasWorkspace ? "Create Workspace" : "Create your first workspace"}
+          </DialogTitle>
         </DialogHeader>
 
         <form className="space-y-4" onSubmit={handleSubmit}>

@@ -11,7 +11,7 @@ export interface MemberType {
 }
 
 export interface ReactionType {
-  _id?:string;
+  _id?: string;
   value: string;
   count: number;
   memberIds: string[];
@@ -23,10 +23,9 @@ export interface PaginationType {
   totalPages: number;
 }
 
-
 export interface MessageType {
   id: string;
-  body: string ;
+  body: string;
   imageUrl: string | null;
   member: MemberType;
   user: UserType;
@@ -34,6 +33,7 @@ export interface MessageType {
   threadCount: number;
   threadTimestamp: number;
   threadImage: string;
+  threadName: string | null;
   createdAt: string;
   updatedAt: string | null;
 }
@@ -43,5 +43,3 @@ export interface MessagesResponse {
   data: MessageType[];
   pagination: PaginationType;
 }
-
-

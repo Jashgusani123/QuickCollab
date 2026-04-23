@@ -124,6 +124,7 @@ export const MessageList = ({
                 createdAt={message.createdAt}
                 threadCount={message.threadCount}
                 threadImage={message.threadImage}
+                threadName={message.threadName ?? null}
                 threadTimestamp={message.threadTimestamp}
                 isEditing={editingId === message.id}
                 setEditingId={setEditingId}
