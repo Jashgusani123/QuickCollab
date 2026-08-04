@@ -9,6 +9,7 @@ export const useUpdateChannel = () => {
 
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["channel"] });
+      queryClient.invalidateQueries({ queryKey: ["channels"] });
     },
   });
 };

@@ -380,8 +380,10 @@ body, html {
 }
 
 .ql-toolbar button:hover {
-  color: var(--editor-toolbar-icon-hover) !important;
-  background-color: var(--content-hover) !important;
+  color: var(--sidebar) !important;
+  background-color: var(--sidebar-border-strong) !important;
+  border-radius: 3px ;
+
 }
 
 .ql-toolbar button.ql-active {

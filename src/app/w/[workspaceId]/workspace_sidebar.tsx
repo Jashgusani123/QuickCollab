@@ -28,7 +28,7 @@ export const WorkspaceSidebar = () => {
     useCurrentMember(workspaceId);
   const { data: workspace, isLoading: workspaceLoading } =
     getWorkspaceQuery(workspaceId);
-  const { data: channel, isLoading: channelLoading } =
+  const { data: channels, isLoading: channelLoading } =
     useGetChannels(workspaceId);
   const { data: members, isLoading: membersLoading } =
     useGetAllMembers(workspaceId);
@@ -74,7 +74,7 @@ export const WorkspaceSidebar = () => {
             : undefined
         }
       >
-        {channel?.map((item) => (
+        {channels?.map((item) => (
           <SidebarItem
             key={item._id}
             icon={HashIcon}
@@ -86,18 +86,20 @@ export const WorkspaceSidebar = () => {
       </WorkspaceSection>
       <WorkspaceSection
         label="Direct Messages"
-        hint="New Direact Message"
-        // onNew={() => {}}
+        hint="New Direct Message"
+        
       >
         {members?.map((item) => (
           <UserItem
             key={item._id}
             id={item._id}
+            memberId={item.userId}
             itsYou={item._id === member._id}
             label={item.user.name}
             image={item.user.image}
             variant={item._id === memberId ? "active" : "default"}
           />
+          
         ))}
       </WorkspaceSection>
     </div>

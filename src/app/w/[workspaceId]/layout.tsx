@@ -7,6 +7,7 @@ import { WorkspaceSidebar } from "./workspace_sidebar";
 import { usePanel } from "@/hooks/use_panel";
 import { Loader2 } from "lucide-react";
 import { Thread } from "@/features/messages/components/thread";
+import { usePathname } from "next/navigation";
 
 interface WorkspaceIdLayoutProps {
   children: React.ReactNode;
@@ -14,13 +15,17 @@ interface WorkspaceIdLayoutProps {
 const workspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
   const { parentMessageId, onCloseMessage } = usePanel();
   const showPanel = !!parentMessageId;
-
+  const pathname = usePathname();
+  const dontShowResizablePanelGroup = pathname.endsWith("/notice");
   return (
     <div className="h-full">
       <Toolbar />
       <div className="flex h-[calc(100vh-40px)]">
         <Sidebar />
-        <ResizablePanelGroup direction="horizontal" autoSaveId={"jg-workspace-layout"}>
+        {dontShowResizablePanelGroup ? (
+          <div className="flex-1 h-full">{children}</div>
+        ) : (
+          <ResizablePanelGroup direction="horizontal" autoSaveId={"jg-workspace-layout"}>
           <ResizablePanel defaultSize={20} minSize={1} className="bg_dark">
             <WorkspaceSidebar />
           </ResizablePanel>
@@ -46,6 +51,7 @@ const workspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
             </>
           )}
         </ResizablePanelGroup>
+        )}
       </div>
     </div>
   );
